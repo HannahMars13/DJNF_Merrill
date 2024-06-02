@@ -100,9 +100,10 @@ make things run.
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
-#load the librar for rio 
-#load the librar for janitor
-
+#load the library for rio 
+library(rio)
+#load the library for janitor
+library(janitor)
 ```
 
 Check to see what's installed by clicking on "Packages" tab in File
@@ -163,6 +164,7 @@ How many columns?
 
 ```{r}
 #use the command ncol to determine the number of columns
+ncol(MediaBucks)
 ```
 
 Dimensions: Gives number rows, then columns
@@ -175,7 +177,7 @@ Names of your columns
 
 ```{r}
 #use the command colnames to determine the number of columns
-
+colnames(MediaBucks)
 ```
 
 OR
@@ -188,13 +190,14 @@ Check data types
 
 ```{r}
 #During class, remove hashtag on next line and run chunk
-#str(MediaBucks)
+str(MediaBucks)
 ```
 
 Let's look at the first six rows
 
 ```{r}
 #Display the first six rows of data
+head(MediaBucks)
 ```
 
 Here is a quick way to view the range of your data
@@ -220,7 +223,7 @@ average
 #We just used sum to determine total salaries.
 #mean is the command to determine averages.
 #replace sum for mean: sum(MediaBucks$Salary, na.rm=TRUE)
-
+mean(MediaBucks$Salary, na.rm=TRUE)
 ```
 
 Distribution by increments of ten
@@ -286,12 +289,10 @@ Better idea: Check Averages!
 #Using the example code above, create a column called Avg_Salary and use the mean command to produce the calculation
 #Adapt the code below to do this:
 
-# MediaBucks %>% 
-#   select(Gender, Salary) %>% 
-#   group_by(Gender) %>% 
-#   summarize(Total = sum(Salary, na.rm=TRUE))
-
-
+MediaBucks %>% 
+   select(Gender, Salary) %>% 
+   group_by(Gender) %>% 
+   summarize(Avg_Salary = mean(Salary, na.rm=TRUE))
 
 ```
 
@@ -345,29 +346,37 @@ Questions
 
 ```{r}
 #1: Build a table for NewYorkTimes employees   
-
+NYT <- subset(MediaBucks, COMPANY=="NewYorkTimes")
 
 ```
 
 
 ```{r}
 #2: Determine median salary of NewYorkTimes employees   
-
+median(NYT$Salary, na.rm=TRUE)
 
 ```
 
 ```{r}
 #3: Identify title, gender and race of the highest paid position at NYT  
-
+NYT %>% 
+  select(TITLE, Salary, Race, Gender) %>% 
+  arrange(desc(Salary))
 
 ```
 
 ```{r}
 #4: Build a table that filters "Business" in the Company column. Determine Summary of the Salary column.
 #Build a second table that filters "Bloomberg" in the Company column.  Determine Summary of the Salary column.
+Business <- MediaBucks %>% 
+  filter(grepl("?Business", COMPANY)) 
+
+summary(Business$Salary)
+
+summary(Bloom$Salary)
 
 #Which one is higher?
-
+#Bloomberg has a higher mean and a higher max.
 
 ```
 

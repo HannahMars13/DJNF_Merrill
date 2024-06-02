@@ -67,7 +67,9 @@ File renamed to: SF_311_Jan29.xlsx
 ```{r message=FALSE, warning=FALSE}
 #background on tidyverse: https://www.tidyverse.org/packages/
 #load the lubridate, tidyverse and janitor libraries
-
+library(lubridate)
+library(tidyverse)
+library(janitor)
 ```
 
 **Load Data**
@@ -80,6 +82,7 @@ SF <- rio::import("https://docs.google.com/spreadsheets/d/1-nkosLJKkfeLSl-UG82DD
 
 ```{r}
 #display the first six rows of SF using head
+head(SF)
 ```
 
 **Really Interview the Data** How big are you? Rows? Columns? List of
@@ -87,6 +90,7 @@ column names?
 
 ```{r}
 #examine all of the SF data using glimpse
+glimpse(SF)
 ```
 
 **Clean column names, Process dates**
@@ -175,9 +179,9 @@ ggplot(Years,aes(x = year, y = n,
 
 ```{r}
 #Copy section of code from above...
-# SF %>% 
-#    count(year) %>% 
-#    group_by(year) %>% 
+SF %>% 
+  count(year) %>% 
+  group_by(year) %>% 
 #Sandwich it onto a simple ggplot that you created in the prior code chunk
   
 ```
